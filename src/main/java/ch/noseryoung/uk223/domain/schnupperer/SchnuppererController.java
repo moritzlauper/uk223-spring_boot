@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Moritz Lauper
  */
 @RestController
-@RequestMapping("/schnupperer")
+@RequestMapping("/schnuppis")
 public class SchnuppererController {
 	
 	private SchnuppererService schnuppererService;
