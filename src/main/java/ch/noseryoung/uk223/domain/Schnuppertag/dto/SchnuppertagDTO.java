@@ -1,7 +1,7 @@
 package ch.noseryoung.uk223.domain.Schnuppertag.dto;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 import ch.noseryoung.uk223.domain.berufsbildner.dto.BerufsbildnerDTO;
 import ch.noseryoung.uk223.domain.standort.dto.StandortDTO;
@@ -14,7 +14,7 @@ public class SchnuppertagDTO {
 	
 	private StandortDTO standort;
 	
-	private List<BerufsbildnerDTO> berufsbilder;
+	private Set<BerufsbildnerDTO> berufsbilder;
 	
 	public SchnuppertagDTO() {}
 	
@@ -24,7 +24,7 @@ public class SchnuppertagDTO {
 	 * @param standort
 	 * @param berufsbilder
 	 */
-	public SchnuppertagDTO(LocalDate start, LocalDate end, StandortDTO standort, List<BerufsbildnerDTO> berufsbilder) {
+	public SchnuppertagDTO(LocalDate start, LocalDate end, StandortDTO standort, Set<BerufsbildnerDTO> berufsbilder) {
 		this.start = start;
 		this.end = end;
 		this.standort = standort;
@@ -76,14 +76,14 @@ public class SchnuppertagDTO {
 	/**
 	 * @return the berufsbilder
 	 */
-	public List<BerufsbildnerDTO> getBerufsbilder() {
+	public Set<BerufsbildnerDTO> getBerufsbilder() {
 		return berufsbilder;
 	}
 	
 	/**
 	 * @param berufsbilder the berufsbilder to set
 	 */
-	public void setBerufsbilder(List<BerufsbildnerDTO> berufsbilder) {
+	public void setBerufsbilder(Set<BerufsbildnerDTO> berufsbilder) {
 		this.berufsbilder = berufsbilder;
 	}
 	
