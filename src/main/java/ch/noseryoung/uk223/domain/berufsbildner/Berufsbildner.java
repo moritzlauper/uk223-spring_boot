@@ -1,22 +1,19 @@
-package ch.noseryoung.uk223.domain.user;
+package ch.noseryoung.uk223.domain.berufsbildner;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import ch.noseryoung.uk223.domain.address.Address;
 
 /**
  * @author Moritz Lauper
  */
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "berufsbildner")
+public class Berufsbildner {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,11 +35,7 @@ public class User {
 	@Column(name = "email")
 	private String email;
 	
-	@ManyToOne
-	@JoinColumn(name = "address_id")
-	private Address address;
-	
-	public User() {}
+	public Berufsbildner() {}
 	
 	/**
 	 * @param username
@@ -50,15 +43,13 @@ public class User {
 	 * @param firstName
 	 * @param lastName
 	 * @param email
-	 * @param address
 	 */
-	public User(String username, String password, String firstName, String lastName, String email, Address address) {
+	public Berufsbildner(String username, String password, String firstName, String lastName, String email) {
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.address = address;
 	}
 	
 	/**
@@ -68,16 +59,14 @@ public class User {
 	 * @param firstName
 	 * @param lastName
 	 * @param email
-	 * @param address
 	 */
-	public User(Long id, String username, String password, String firstName, String lastName, String email, Address address) {
+	public Berufsbildner(Long id, String username, String password, String firstName, String lastName, String email) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.address = address;
 	}
 	
 	/**
@@ -148,20 +137,6 @@ public class User {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	
-	/**
-	 * @return the address
-	 */
-	public Address getAddress() {
-		return address;
-	}
-	
-	/**
-	 * @param address the address to set
-	 */
-	public void setAddress(Address address) {
-		this.address = address;
 	}
 	
 	/**
