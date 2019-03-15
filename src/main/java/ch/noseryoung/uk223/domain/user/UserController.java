@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ch.noseryoung.uk223.domain.user.dto.UserDTO;
+import ch.noseryoung.uk223.domain.user.dto.UserMapper;
+
 /**
  * This class holds the endpoints for the entity user.
  * 
@@ -28,44 +31,47 @@ public class UserController {
 	
 	private UserService userService;
 	
+	private UserMapper userMapper;
+	
 	/**
 	 * @param userService
 	 */
 	@Autowired
-	public UserController(UserService userService) {
+	public UserController(UserService userService, UserMapper userMapper) {
 		this.userService = userService;
+		this.userMapper = userMapper;
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<User> getById(@PathVariable Long id) {
+	public ResponseEntity<UserDTO> getById(@PathVariable Long id) {
 		Optional<User> user = userService.findById(id);
 		
 		if (user.isPresent()) {
-			return new ResponseEntity<>(user.get(), HttpStatus.OK);
+			return new ResponseEntity<>(userMapper.toDTO(user.get()), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
 	@GetMapping({ "", "/" })
-	public ResponseEntity<List<User>> getAll() {
+	public ResponseEntity<List<UserDTO>> getAll() {
 		List<User> users = userService.findAll();
 		
-		return new ResponseEntity<>(users, HttpStatus.OK);
+		return new ResponseEntity<>(userMapper.toDTOs(users), HttpStatus.OK);
 	}
 	
 	@PostMapping({ "", "/" })
-	public ResponseEntity<User> create(@Valid @RequestBody User user) {
+	public ResponseEntity<UserDTO> create(@Valid @RequestBody User user) {
 		userService.save(user);
 		
-		return new ResponseEntity<>(user, HttpStatus.CREATED);
+		return new ResponseEntity<>(userMapper.toDTO(user), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<User> updateById(@PathVariable Long id, @Valid @RequestBody User user) {
-		HttpStatus status = ((userService.update(user, id)) ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
+	public ResponseEntity<UserDTO> updateById(@PathVariable Long id, @Valid @RequestBody UserDTO userDto) {
+		HttpStatus status = ((userService.update(userMapper.fromDTO(userDto), id)) ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
 		
-		return new ResponseEntity<>(user, status);
+		return new ResponseEntity<>(userDto, status);
 	}
 	
 	@DeleteMapping("/{id}")

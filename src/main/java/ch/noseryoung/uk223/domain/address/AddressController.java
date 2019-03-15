@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ch.noseryoung.uk223.domain.address.Address;
+import ch.noseryoung.uk223.domain.address.AddressService;
+import ch.noseryoung.uk223.domain.address.dto.AddressDTO;
+import ch.noseryoung.uk223.domain.address.dto.AddressMapper;
+
 /**
  * This class holds the endpoints for the entity address.
  * 
@@ -26,46 +31,49 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/addresses")
 public class AddressController {
 	
-	private AddressService addressService;
+private AddressService addressService;
+	
+	private AddressMapper addressMapper;
 	
 	/**
 	 * @param addressService
 	 */
 	@Autowired
-	public AddressController(AddressService addressService) {
+	public AddressController(AddressService addressService, AddressMapper addressMapper) {
 		this.addressService = addressService;
+		this.addressMapper = addressMapper;
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Address> getById(@PathVariable Long id) {
+	public ResponseEntity<AddressDTO> getById(@PathVariable Long id) {
 		Optional<Address> address = addressService.findById(id);
 		
 		if (address.isPresent()) {
-			return new ResponseEntity<>(address.get(), HttpStatus.OK);
+			return new ResponseEntity<>(addressMapper.toDTO(address.get()), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
 	@GetMapping({ "", "/" })
-	public ResponseEntity<List<Address>> getAll() {
+	public ResponseEntity<List<AddressDTO>> getAll() {
 		List<Address> addresss = addressService.findAll();
 		
-		return new ResponseEntity<>(addresss, HttpStatus.OK);
+		return new ResponseEntity<>(addressMapper.toDTOs(addresss), HttpStatus.OK);
 	}
 	
 	@PostMapping({ "", "/" })
-	public ResponseEntity<Address> create(@Valid @RequestBody Address address) {
+	public ResponseEntity<AddressDTO> create(@Valid @RequestBody Address address) {
 		addressService.save(address);
 		
-		return new ResponseEntity<>(address, HttpStatus.CREATED);
+		return new ResponseEntity<>(addressMapper.toDTO(address), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Address> updateById(@PathVariable Long id, @Valid @RequestBody Address address) {
-		HttpStatus status = ((addressService.update(address, id)) ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
+	public ResponseEntity<AddressDTO> updateById(@PathVariable Long id, @Valid @RequestBody AddressDTO addressDto) {
+		HttpStatus status = ((addressService.update(addressMapper.fromDTO(addressDto), id)) ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
 		
-		return new ResponseEntity<>(address, status);
+		return new ResponseEntity<>(addressDto, status);
 	}
 	
 	@DeleteMapping("/{id}")
