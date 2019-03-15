@@ -8,8 +8,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ch.noseryoung.uk223.domain.user.dto.UserDTO;
 import ch.noseryoung.uk223.domain.user.dto.UserMapper;
+import ch.noseryoung.uk223.domain.user.validation.UserValidator;
 
 /**
  * This class holds the endpoints for the entity user.
@@ -33,13 +36,21 @@ public class UserController {
 	
 	private UserMapper userMapper;
 	
+	private UserValidator userValidator;
+	
 	/**
 	 * @param userService
 	 */
 	@Autowired
-	public UserController(UserService userService, UserMapper userMapper) {
+	public UserController(UserService userService, UserMapper userMapper, UserValidator userValidator) {
 		this.userService = userService;
 		this.userMapper = userMapper;
+		this.userValidator = userValidator;
+	}
+	
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		dataBinder.addValidators(userValidator);
 	}
 	
 	@GetMapping("/{id}")

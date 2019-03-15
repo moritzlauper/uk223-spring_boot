@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,10 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.noseryoung.uk223.domain.address.Address;
-import ch.noseryoung.uk223.domain.address.AddressService;
 import ch.noseryoung.uk223.domain.address.dto.AddressDTO;
 import ch.noseryoung.uk223.domain.address.dto.AddressMapper;
+import ch.noseryoung.uk223.domain.address.validation.AddressValidator;
 
 /**
  * This class holds the endpoints for the entity address.
@@ -31,17 +31,25 @@ import ch.noseryoung.uk223.domain.address.dto.AddressMapper;
 @RequestMapping("/addresses")
 public class AddressController {
 	
-private AddressService addressService;
+	private AddressService addressService;
 	
 	private AddressMapper addressMapper;
+	
+	private AddressValidator addressValidator;
 	
 	/**
 	 * @param addressService
 	 */
 	@Autowired
-	public AddressController(AddressService addressService, AddressMapper addressMapper) {
+	public AddressController(AddressService addressService, AddressMapper addressMapper, AddressValidator addressValidator) {
 		this.addressService = addressService;
 		this.addressMapper = addressMapper;
+		this.addressValidator = addressValidator;
+	}
+	
+	public void initBinder(WebDataBinder dataBinder) {
+		
+		dataBinder.addValidators(addressValidator);
 	}
 	
 	@GetMapping("/{id}")
@@ -71,7 +79,8 @@ private AddressService addressService;
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<AddressDTO> updateById(@PathVariable Long id, @Valid @RequestBody AddressDTO addressDto) {
-		HttpStatus status = ((addressService.update(addressMapper.fromDTO(addressDto), id)) ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
+		HttpStatus status =
+				((addressService.update(addressMapper.fromDTO(addressDto), id)) ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
 		
 		return new ResponseEntity<>(addressDto, status);
 	}
