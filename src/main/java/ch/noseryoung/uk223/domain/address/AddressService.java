@@ -3,6 +3,7 @@ package ch.noseryoung.uk223.domain.address;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +16,14 @@ import org.springframework.stereotype.Service;
 public class AddressService {
 	
 	private AddressRepository addressRepository;
+	
+	/**
+	 * @param addressRepository
+	 */
+	@Autowired
+	public AddressService(AddressRepository addressRepository) {
+		this.addressRepository = addressRepository;
+	}
 	
 	public Optional<Address> findById(Long id) {
 		Optional<Address> address = addressRepository.findById(id);

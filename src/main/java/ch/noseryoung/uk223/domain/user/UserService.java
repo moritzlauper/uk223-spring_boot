@@ -3,6 +3,7 @@ package ch.noseryoung.uk223.domain.user;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,6 +17,14 @@ public class UserService {
 	
 	private UserRepository userRepository;
 	
+	/**
+	 * @param userRepository
+	 */
+	@Autowired
+	public UserService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+
 	public Optional<User> findById(Long id) {
 		Optional<User> user = userRepository.findById(id);
 		return user;

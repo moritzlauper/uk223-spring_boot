@@ -57,11 +57,7 @@ public class UserController {
 	public ResponseEntity<UserDTO> getById(@PathVariable Long id) {
 		Optional<User> user = userService.findById(id);
 		
-		if (user.isPresent()) {
-			return new ResponseEntity<>(userMapper.toDTO(user.get()), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+		return new ResponseEntity<>(userMapper.toDTO(user.get()), HttpStatus.OK);
 	}
 	
 	@GetMapping({ "", "/" })

@@ -56,11 +56,7 @@ public class AddressController {
 	public ResponseEntity<AddressDTO> getById(@PathVariable Long id) {
 		Optional<Address> address = addressService.findById(id);
 		
-		if (address.isPresent()) {
-			return new ResponseEntity<>(addressMapper.toDTO(address.get()), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+		return new ResponseEntity<>(addressMapper.toDTO(address.get()), HttpStatus.OK);
 	}
 	
 	@GetMapping({ "", "/" })
