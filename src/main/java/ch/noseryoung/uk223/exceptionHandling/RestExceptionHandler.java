@@ -16,6 +16,6 @@ public class RestExceptionHandler {
 	@ExceptionHandler(value = NoSuchElementException.class)
 	public ResponseEntity<Object> exception(NoSuchElementException exception) {
 		
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>("The given object was not found.", HttpStatus.NOT_FOUND);
 	}
 }
