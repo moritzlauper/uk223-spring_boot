@@ -39,5 +39,9 @@ dependencies {
 	
 	// PostgreSQL
 	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.4'
+	
+	// Swagger
+	compile "io.springfox:springfox-swagger2:2.9.2"
+	compile "io.springfox:springfox-swagger-ui:2.9.2"
 
 }

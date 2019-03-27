@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ch.noseryoung.cecile.webContext.domain.authority.Authority;
 import ch.noseryoung.uk223.domain.user.dto.UserDTO;
 import ch.noseryoung.uk223.domain.user.dto.UserMapper;
 import ch.noseryoung.uk223.domain.user.validation.UserValidator;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * This class holds the endpoints for the entity user.
@@ -30,6 +33,9 @@ import ch.noseryoung.uk223.domain.user.validation.UserValidator;
  */
 @RestController
 @RequestMapping("/users")
+@Api(
+		value = "UserController"
+	)
 public class UserController {
 	
 	private UserService userService;
@@ -53,6 +59,10 @@ public class UserController {
 		dataBinder.addValidators(userValidator);
 	}
 	
+	@ApiOperation(
+			value = "This endpoint returns the user with the given id.",
+			response = UserDTO.class
+		)
 	@GetMapping("/{id}")
 	public ResponseEntity<UserDTO> getById(@PathVariable Long id) {
 		Optional<User> user = userService.findById(id);
@@ -60,6 +70,10 @@ public class UserController {
 		return new ResponseEntity<>(userMapper.toDTO(user.get()), HttpStatus.OK);
 	}
 	
+	@ApiOperation(
+			value = "This endpoint returns all users.",
+			response = UserDTO.class
+		)
 	@GetMapping({ "", "/" })
 	public ResponseEntity<List<UserDTO>> getAll() {
 		List<User> users = userService.findAll();
@@ -67,6 +81,10 @@ public class UserController {
 		return new ResponseEntity<>(userMapper.toDTOs(users), HttpStatus.OK);
 	}
 	
+	@ApiOperation(
+			value = "This endpoint creates a user.",
+			response = UserDTO.class
+		)
 	@PostMapping({ "", "/" })
 	public ResponseEntity<UserDTO> create(@Valid @RequestBody User user) {
 		userService.save(user);
@@ -74,6 +92,10 @@ public class UserController {
 		return new ResponseEntity<>(userMapper.toDTO(user), HttpStatus.CREATED);
 	}
 	
+	@ApiOperation(
+			value = "This endpoint updates the user with the given id.",
+			response = UserDTO.class
+		)
 	@PutMapping("/{id}")
 	public ResponseEntity<UserDTO> updateById(@PathVariable Long id, @Valid @RequestBody UserDTO userDto) {
 		HttpStatus status = ((userService.update(userMapper.fromDTO(userDto), id)) ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
@@ -81,6 +103,10 @@ public class UserController {
 		return new ResponseEntity<>(userDto, status);
 	}
 	
+	@ApiOperation(
+			value = "This endpoint deletes the user with the given id.",
+			response = UserDTO.class
+		)
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteById(@PathVariable Long id) {
 		userService.deleteById(id);
