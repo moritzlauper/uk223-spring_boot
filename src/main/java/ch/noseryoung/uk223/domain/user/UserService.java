@@ -1,6 +1,7 @@
 package ch.noseryoung.uk223.domain.user;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,16 +40,14 @@ public class UserService {
 		userRepository.save(user);
 	}
 	
-	public boolean update(User user, Long id) {
+	public void update(User newUser, Long id) throws NoSuchElementException {
 		Optional<User> currentUser = userRepository.findById(id);
 		if (currentUser.isPresent()) {
-			user.setId(id);
+			newUser.setId(id);
+			userRepository.save(newUser);
 		} else {
-			return false;
+			throw new NoSuchElementException(String.format("No user with given id '%d' found", id));
 		}
-		
-		userRepository.save(user);
-		return true;
 	}
 	
 	public void deleteById(Long id) {

@@ -1,6 +1,7 @@
 package ch.noseryoung.uk223.domain.address;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,24 +32,22 @@ public class AddressService {
 	}
 	
 	public List<Address> findAll() {
-		List<Address> addresss = addressRepository.findAll();
-		return addresss;
+		List<Address> addresses = addressRepository.findAll();
+		return addresses;
 	}
 	
 	public void save(Address address) {
 		addressRepository.save(address);
 	}
 	
-	public boolean update(Address address, Long id) {
+	public void update(Address newAddress, Long id) throws NoSuchElementException {
 		Optional<Address> currentAddress = addressRepository.findById(id);
 		if (currentAddress.isPresent()) {
-			address.setId(id);
+			newAddress.setId(id);
+			addressRepository.save(newAddress);
 		} else {
-			return false;
+		    throw new NoSuchElementException(String.format("No address with given id '%d' found", id));
 		}
-		
-		addressRepository.save(address);
-		return true;
 	}
 	
 	public void deleteById(Long id) {

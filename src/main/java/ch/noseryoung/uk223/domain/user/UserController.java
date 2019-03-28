@@ -86,7 +86,8 @@ public class UserController {
 			response = UserDTO.class
 		)
 	@PostMapping({ "", "/" })
-	public ResponseEntity<UserDTO> create(@Valid @RequestBody User user) {
+	public ResponseEntity<UserDTO> create(@Valid @RequestBody UserDTO userDto) {
+		var user = userMapper.fromDTO(userDto);
 		userService.save(user);
 		
 		return new ResponseEntity<>(userMapper.toDTO(user), HttpStatus.CREATED);
@@ -98,9 +99,9 @@ public class UserController {
 		)
 	@PutMapping("/{id}")
 	public ResponseEntity<UserDTO> updateById(@PathVariable Long id, @Valid @RequestBody UserDTO userDto) {
-		HttpStatus status = ((userService.update(userMapper.fromDTO(userDto), id)) ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
+		userService.update(userMapper.fromDTO(userDto), id);
 		
-		return new ResponseEntity<>(userDto, status);
+		return new ResponseEntity<>(userDto, HttpStatus.OK);
 	}
 	
 	@ApiOperation(

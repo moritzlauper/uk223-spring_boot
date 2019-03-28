@@ -9,14 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ch.noseryoung.uk223.domain.address.dto.AddressDTO;
 import ch.noseryoung.uk223.domain.address.dto.AddressMapper;
@@ -46,9 +39,9 @@ public class AddressController {
 		this.addressMapper = addressMapper;
 		this.addressValidator = addressValidator;
 	}
-	
+
+	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
-		
 		dataBinder.addValidators(addressValidator);
 	}
 	
@@ -61,13 +54,14 @@ public class AddressController {
 	
 	@GetMapping({ "", "/" })
 	public ResponseEntity<List<AddressDTO>> getAll() {
-		List<Address> addresss = addressService.findAll();
+		List<Address> addresses = addressService.findAll();
 		
-		return new ResponseEntity<>(addressMapper.toDTOs(addresss), HttpStatus.OK);
+		return new ResponseEntity<>(addressMapper.toDTOs(addresses), HttpStatus.OK);
 	}
 	
 	@PostMapping({ "", "/" })
-	public ResponseEntity<AddressDTO> create(@Valid @RequestBody Address address) {
+	public ResponseEntity<AddressDTO> create(@Valid @RequestBody AddressDTO addressDto) {
+	    var address = addressMapper.fromDTO(addressDto);
 		addressService.save(address);
 		
 		return new ResponseEntity<>(addressMapper.toDTO(address), HttpStatus.CREATED);
@@ -75,10 +69,9 @@ public class AddressController {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<AddressDTO> updateById(@PathVariable Long id, @Valid @RequestBody AddressDTO addressDto) {
-		HttpStatus status =
-				((addressService.update(addressMapper.fromDTO(addressDto), id)) ? HttpStatus.CREATED : HttpStatus.NOT_FOUND);
+		addressService.update(addressMapper.fromDTO(addressDto), id);
 		
-		return new ResponseEntity<>(addressDto, status);
+		return new ResponseEntity<>(addressDto, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")

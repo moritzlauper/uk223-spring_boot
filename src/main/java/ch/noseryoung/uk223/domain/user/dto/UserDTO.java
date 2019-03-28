@@ -1,66 +1,66 @@
 package ch.noseryoung.uk223.domain.user.dto;
 
+import ch.noseryoung.uk223.domain.address.dto.AddressDTO;
+
 public class UserDTO {
-	
+
+	private Long id;
+
 	private String firstName;
 	
 	private String lastName;
 	
 	private String email;
-	
+
+	private AddressDTO address;
+
 	public UserDTO() {}
-	
-	/**
-	 * @param firstName
-	 * @param lastName
-	 * @param email
-	 */
-	public UserDTO(String firstName, String lastName, String email) {
+
+	public UserDTO(Long id, String firstName, String lastName, String email, AddressDTO address) {
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.address = address;
 	}
-	
-	/**
-	 * @return the firstName
-	 */
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
-	
-	/**
-	 * @param firstName the firstName to set
-	 */
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	
-	/**
-	 * @return the lastName
-	 */
+
 	public String getLastName() {
 		return lastName;
 	}
-	
-	/**
-	 * @param lastName the lastName to set
-	 */
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
-	/**
-	 * @return the email
-	 */
+
 	public String getEmail() {
 		return email;
 	}
-	
-	/**
-	 * @param email the email to set
-	 */
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
+	public AddressDTO getAddress() {
+		return address;
+	}
+
+	public void setAddress(AddressDTO address) {
+		this.address = address;
+	}
 }
