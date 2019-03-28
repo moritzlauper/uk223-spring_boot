@@ -25,18 +25,19 @@ ext {
 dependencies {
 	//Spring Boot
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+	//implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	testCompile("org.assertj:assertj-core:3.11.1")
 	
 	//Mapstruct
 	implementation "org.mapstruct:mapstruct:${mapstructVersion}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
     
     testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
-	
+
 	// PostgreSQL
 	compile group: 'org.postgresql', name: 'postgresql', version: '42.2.4'
 	
@@ -44,4 +45,6 @@ dependencies {
 	compile "io.springfox:springfox-swagger2:2.9.2"
 	compile "io.springfox:springfox-swagger-ui:2.9.2"
 
+	// H2 Database Engine
+	testCompile "com.h2database:h2:1.4.194"
 }
