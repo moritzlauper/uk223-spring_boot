@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.noseryoung.cecile.webContext.domain.authority.Authority;
 import ch.noseryoung.uk223.domain.user.dto.UserDTO;
 import ch.noseryoung.uk223.domain.user.dto.UserMapper;
 import ch.noseryoung.uk223.domain.user.validation.UserValidator;
