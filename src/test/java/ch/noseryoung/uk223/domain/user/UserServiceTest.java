@@ -14,6 +14,9 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * @author Santiago Gabriel Vollmar
+ */
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
 

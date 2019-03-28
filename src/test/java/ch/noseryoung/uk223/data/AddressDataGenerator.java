@@ -2,8 +2,9 @@ package ch.noseryoung.uk223.data;
 
 import ch.noseryoung.uk223.domain.address.Address;
 
-import java.util.List;
-
+/**
+ * @author Santiago Gabriel Vollmar
+ */
 class AddressDataGenerator implements DataGenerator<Address> {
 
     /**

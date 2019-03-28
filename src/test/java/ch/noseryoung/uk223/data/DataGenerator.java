@@ -1,7 +1,8 @@
 package ch.noseryoung.uk223.data;
 
-import java.util.List;
-
+/**
+ * @author Santiago Gabriel Vollmar
+ */
 public interface DataGenerator<T> {
     DataHolder<T> generate();
 }

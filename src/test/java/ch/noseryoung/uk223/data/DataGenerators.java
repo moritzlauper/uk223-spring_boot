@@ -3,6 +3,9 @@ package ch.noseryoung.uk223.data;
 import ch.noseryoung.uk223.domain.address.Address;
 import ch.noseryoung.uk223.domain.user.User;
 
+/**
+ * @author Santiago Gabriel Vollmar
+ */
 public class DataGenerators {
 
     public static <T> DataGenerator<T> forClass(Class<T> clazz) {

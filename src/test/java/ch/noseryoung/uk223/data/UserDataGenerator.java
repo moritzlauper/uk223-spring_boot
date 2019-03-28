@@ -2,8 +2,9 @@ package ch.noseryoung.uk223.data;
 
 import ch.noseryoung.uk223.domain.user.User;
 
-import java.util.List;
-
+/**
+ * @author Santiago Gabriel Vollmar
+ */
 class UserDataGenerator implements DataGenerator<User> {
 
     private AddressDataGenerator addressGenerator;

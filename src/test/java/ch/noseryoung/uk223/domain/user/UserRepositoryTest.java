@@ -19,9 +19,11 @@ import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.*;
 
+/**
+ * @author Santiago Gabriel Vollmar
+ */
 @RunWith(SpringRunner.class)
 @TestPropertySource("/application-test.properties")
-//@ContextConfiguration()
 @DataJpaTest
 public class UserRepositoryTest {
     @Autowired

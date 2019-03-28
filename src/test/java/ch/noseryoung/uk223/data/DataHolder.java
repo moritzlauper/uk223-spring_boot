@@ -2,6 +2,9 @@ package ch.noseryoung.uk223.data;
 
 import java.util.List;
 
+/**
+ * @author Santiago Gabriel Vollmar
+ */
 public class DataHolder<T> {
 
     static <T> DataHolder<T> of (T first, T second, T third) {

@@ -26,6 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * @author Santiago Gabriel Vollmar
+ */
 @RunWith(SpringRunner.class)
 @WebMvcTest(controllers = UserController.class, includeFilters = {
         @Filter(classes = {UserValidator.class, UserMapper.class},
